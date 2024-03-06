@@ -7,7 +7,8 @@ words = text.split()
 edited_list = []
 
 for word in words:
-    word_without_punctuation = word.strip('.,')
-    edited_list.append(word_without_punctuation + 'ing')
+    edited_list.append(word + 'ing')
 
-print(', '.join(edited_list))
+new_text = ' '.join(edited_list)
+result_text = new_text.replace(',ing', 'ing,').replace('.ing', 'ing.')
+print(result_text)
