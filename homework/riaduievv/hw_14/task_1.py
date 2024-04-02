@@ -17,8 +17,7 @@ cursor.execute('SELECT * FROM books WHERE taken_by_student_id = 863')
 print(cursor.fetchall())
 
 cursor = db.cursor(dictionary=True)
-cursor.execute('''SELECT students.name, students.second_name, 
-`groups`.title, subjets.title, books.title, lessons.title, marks.value
+cursor.execute('''SELECT students.name, students.second_name, `groups`.title, subjets.title, books.title, lessons.title, marks.value
 FROM students
 JOIN `groups` ON students.group_id = `groups`.id
 JOIN marks ON marks.student_id = students.id
