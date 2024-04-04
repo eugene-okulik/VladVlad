@@ -1,3 +1,31 @@
-[{'id': 2012, 'value': 'excellent', 'lesson_id': 2932, 'student_id': 863}, {'id': 2013, 'value': 'perfect', 'lesson_id': 2933, 'student_id': 863}, {'id': 2014, 'value': 'good', 'lesson_id': 2934, 'student_id': 863}, {'id': 2015, 'value': 'perfect', 'lesson_id': 2935, 'student_id': 863}]
-[{'id': 1734, 'title': 'book_001', 'taken_by_student_id': 863}, {'id': 1737, 'title': 'book_002', 'taken_by_student_id': 863}, {'id': 1738, 'title': 'book_003', 'taken_by_student_id': 863}]
-[{'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'excellent'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'good'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'excellent'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'good'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'excellent'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson1', 'value': 'good'}, {'name': 'Bob', 'second_name': 'Smith', 'title': 'lesson2', 'value': 'perfect'}]
+INSERT INTO students (name, second_name, group_id) values ('Bob', 'Smith', 809)
+
+INSERT INTO `groups` (title, start_date, end_date) values ('Group#30', 'oct 2023', 'feb 2023')
+
+INSERT  INTO books (title, taken_by_student_id) values ('book_003', 863)
+
+INSERT INTO subjets (title) values ('subject_003')
+
+INSERT  INTO lessons (title, subject_id) values ('lesson2', 1090)
+
+INSERT INTO marks (value, lesson_id, student_id) values ('perfect', 2935, 863)
+
+
+SELECT *
+FROM marks
+WHERE student_id = 863
+
+
+SELECT *
+FROM books
+WHERE taken_by_student_id = 863
+
+
+SELECT students.name, students.second_name, `groups`.title, subjets.title, books.title, lessons.title, marks.value
+FROM students
+JOIN `groups` ON students.group_id = `groups`.id
+JOIN marks ON marks.student_id = students.id
+JOIN lessons ON lessons.id = marks.lesson_id
+JOIN subjets ON subjets.id = lessons.subject_id
+JOIN books ON books.taken_by_student_id = students.id
+WHERE students.id = 863
