@@ -20,21 +20,23 @@ hw_16_path = os.path.join(home_path, 'eugene_okulik', 'Lesson_16', 'hw_data', 'd
 with open(hw_16_path, newline='') as new_file:
     file_data = csv.DictReader(new_file)
     for row in file_data:
-        query = """
-        SELECT students.name, students.second_name, 
-        `groups`.title, subjets.title, books.title, lessons.title, marks.value
-            FROM students
-            JOIN `groups` ON students.group_id = `groups`.id
-            JOIN marks ON marks.student_id = students.id
-            JOIN lessons ON lessons.id = marks.lesson_id
-            JOIN subjets ON subjets.id = lessons.subject_id
-            JOIN books ON books.taken_by_student_id = students.id
-            WHERE `groups`.title = %s;
-        """
-        cursor.execute(query, (row['group_title'],))
-        result = cursor.fetchall()
-
-        if not result:
-            print(f"Not in base:{row}")
+        if isinstance(row, dict):
+            group_title = row.get('group_title')
+            if group_title:
+                query = """
+                SELECT students.name, students.second_name, 
+                `groups`.title, subjets.title, books.title, lessons.title, marks.value
+                FROM students
+                JOIN `groups` ON students.group_id = `groups`.id
+                JOIN marks ON marks.student_id = students.id
+                JOIN lessons ON lessons.id = marks.lesson_id
+                JOIN subjets ON subjets.id = lessons.subject_id
+                JOIN books ON books.taken_by_student_id = students.id
+                WHERE `groups`.title = %s;
+                """
+                cursor.execute(query, (group_title,))
+                result = cursor.fetchall()
+                if not result:
+                    print(f"Not in base {row}")
 
 db.close()
