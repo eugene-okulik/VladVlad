@@ -23,8 +23,16 @@ with open(hw_16_path, newline="") as new_file:
     file_data = csv.DictReader(new_file)
     for row in file_data:
         if isinstance(row, dict):
+            name = row.get("name")
+            second_name = row.get("second_name")
             group_title = row.get("group_title")
-            if group_title:
+            book_title = row.get("book_title")
+            subject_title = row.get("subject_title")
+            lesson_title = row.get("lesson_title")
+            mark_value = row.get("mark_value")
+            if all(
+                [name, second_name, group_title, book_title, subject_title, mark_value]
+            ):
                 query = """
                 SELECT students.name, students.second_name,
                 `groups`.title, subjets.title, books.title, lessons.title, marks.value
@@ -34,11 +42,29 @@ with open(hw_16_path, newline="") as new_file:
                 JOIN lessons ON lessons.id = marks.lesson_id
                 JOIN subjets ON subjets.id = lessons.subject_id
                 JOIN books ON books.taken_by_student_id = students.id
-                WHERE `groups`.title = %s;
+                WHERE students.name = %s
+                AND students.second_name = %s
+                AND `groups`.title = %s
+                AND books.title = %s
+                AND subjets.title = %s
+                AND lessons.title = %s
+                AND marks.value = %s;
                 """
-                cursor.execute(query, (group_title,))
+                cursor.execute(
+                    query,
+                    (
+                        name,
+                        second_name,
+                        group_title,
+                        book_title,
+                        subject_title,
+                        lesson_title,
+                        mark_value,
+                    ),
+                )
                 result = cursor.fetchall()
                 if not result:
-                    print(f"Not in base {row}")
+                    print(row)
+
 
 db.close()
