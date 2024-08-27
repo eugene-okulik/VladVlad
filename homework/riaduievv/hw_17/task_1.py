@@ -1,8 +1,9 @@
 import os
 import argparse
+import glob
 
 parser = argparse.ArgumentParser()
-parser.add_argument("files", nargs="+", help="File names")
+parser.add_argument("files", help="File names")
 parser.add_argument("--text", help="Text to search for")
 args = parser.parse_args()
 
@@ -15,7 +16,9 @@ def get_context(line_content, text, window=5):
     return " ".join(words[start:end])
 
 
-for file_path in args.files:
+log_files = glob.glob(os.path.join(args.files, "*.log"))
+
+for file_path in log_files:
     if os.path.exists(file_path):
         with open(file_path, "r") as file:
             for line_number, line in enumerate(file):
