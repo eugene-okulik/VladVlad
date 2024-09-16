@@ -1,5 +1,6 @@
 import requests
 import pytest
+import allure
 
 
 @pytest.fixture()
@@ -52,6 +53,8 @@ def before_after_test():
         {"data": {"year": 2021, "price": 1399.99, "CPU model": "Intel Core i5"}},
     ],
 )
+@allure.feature("Manage API queries")
+@allure.story("Create post with different data")
 def test_add_object(body, start_end_test, before_after_test):
     body = {
         "name": "Apple MacBook Pro 16",
@@ -67,6 +70,10 @@ def test_add_object(body, start_end_test, before_after_test):
         "https://api.restful-api.dev/objects", json=body, headers=headers
     )
     assert response.status_code == 200
+
+
+allure.feature("Manage API queries")
+allure.story("Updating product information")
 
 
 @pytest.mark.critical
@@ -88,6 +95,10 @@ def test_put_object(new_post_id, before_after_test):
     assert response["data"]["color"] == "silver"
 
 
+allure.feature("Manage API queries")
+allure.story("Partly updating product information")
+
+
 @pytest.mark.medium
 def test_partialy_update_object(new_post_id, before_after_test):
     body = {"name": "Apple MacBook Pro (Updated Name)"}
@@ -96,6 +107,10 @@ def test_partialy_update_object(new_post_id, before_after_test):
         f"https://api.restful-api.dev/objects/{new_post_id}", headers=headers, json=body
     ).json()
     assert response["name"] == "Apple MacBook Pro (Updated Name)"
+
+
+allure.feature("Manage API queries")
+allure.story("Delete product")
 
 
 def test_delete_object(new_post_id, before_after_test):
