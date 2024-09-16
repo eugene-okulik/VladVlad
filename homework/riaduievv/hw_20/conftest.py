@@ -1,6 +1,7 @@
 import pytest
 import requests
 
+
 @pytest.fixture()
 def new_post_id():
     body = {
