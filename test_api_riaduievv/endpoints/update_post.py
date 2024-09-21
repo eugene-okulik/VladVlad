@@ -18,5 +18,5 @@ class UpdatePost(BaseEndpoint):
         return self.response
 
     @allure.step("Check color is silver")
-    def check_response_color_is_silver(self):
-        assert self.json["data"]["color"] == "silver"
+    def check_response_color_is_silver(self, color):
+        assert self.json["data"]["color"] == color

@@ -23,7 +23,7 @@ def test_add_object(create_endpoint, data, start_end_test, before_after_test):
 
 
 @pytest.mark.critical
-def test_put_object(update_endpoint, new_post_id, before_after_test):
+def test_put_object(update_endpoint, new_object_id, before_after_test):
     body = {
         "name": "Apple MacBook Pro 16",
         "data": {
@@ -34,21 +34,21 @@ def test_put_object(update_endpoint, new_post_id, before_after_test):
             "color": "silver",
         },
     }
-    update_endpoint.update_created_post(body=body, post_id=new_post_id)
-    update_endpoint.check_response_color_is_silver()
+    update_endpoint.update_created_post(body=body, post_id=new_object_id)
+    update_endpoint.check_response_color_is_silver(color='silver')
 
 
 @pytest.mark.medium
 def test_partially_update_object(
-    partially_update_endpoint, new_post_id, before_after_test
+    partially_update_endpoint, new_object_id, before_after_test
 ):
     body = {"name": "Apple MacBook Pro (Updated Name)"}
     partially_update_endpoint.partially_update_created_post(
-        body=body, post_id=new_post_id
+        body=body, post_id=new_object_id
     )
-    partially_update_endpoint.check_name_is_changed()
+    partially_update_endpoint.check_name_is_changed(name='Apple MacBook Pro (Updated Name)')
 
 
-def test_delete_object(delete_endpoint, new_post_id, before_after_test):
-    delete_endpoint.delete_post(post_id=new_post_id)
+def test_delete_object(delete_endpoint, new_object_id, before_after_test):
+    delete_endpoint.delete_post(post_id=new_object_id)
     delete_endpoint.check_response_status_code_is_200()

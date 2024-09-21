@@ -28,7 +28,7 @@ def delete_endpoint():
 
 
 @pytest.fixture()
-def new_post_id():
+def new_object_id():
     body = {
         "name": "Apple MacBook Pro 16",
         "data": {

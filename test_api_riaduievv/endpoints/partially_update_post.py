@@ -18,5 +18,5 @@ class PartiallyUpdatePost(BaseEndpoint):
         return self.response
 
     @allure.step("Check name is changed")
-    def check_name_is_changed(self):
-        assert self.json["name"] == "Apple MacBook Pro (Updated Name)"
+    def check_name_is_changed(self, name):
+        assert self.json["name"] == name
