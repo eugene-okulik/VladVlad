@@ -34,4 +34,3 @@ class ApiTest(HttpUser):
         self.client.patch(
             f"/posts/{random.choice([1,9,13,14])}", headers=self.headers, json=data
         )
-
